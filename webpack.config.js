@@ -1,59 +1,68 @@
-var
-    webpack = require('webpack'),
-    root = __dirname + '/src',
-    entry = {
-        app: './src/index.js'
-    },
-    output = {
-        path: __dirname,
-        library: 'ATV',
-        libraryTarget: 'umd'
-    },
-    plugins = [new webpack.BannerPlugin('Copyright (c) Emad Alam http://emad.in\nhttps://github.com/emadalam/atvjs')];
+const webpack = require('webpack'),
+  root = __dirname + '/src',
+  entry = {
+      app: './src/index.js'
+  },
+  output = {
+      path: __dirname,
+      library: 'ATV',
+      libraryTarget: 'umd',
+      globalObject: 'this'
+  },
+  plugins = [new webpack.BannerPlugin('Copyright (c) Emad Alam http://emad.in\nhttps://github.com/emadalam/atvjs')];
 
 module.exports.development = {
-    debug: true,
+    mode: 'development',
     entry: entry,
     output: Object.assign({}, output, {filename: 'atv.js'}),
     resolve: {
-        root: root
+        modules: [
+            'node_modules',
+            root
+        ]
     },
     plugins: plugins,
     module: {
-        loaders: [{
+        rules: [{
             test: /\.js?$/,
             exclude: /node_modules|bower_components|native/,
-            loader: 'babel-loader'
+            use: 'babel-loader'
         }]
     }
 };
 
 module.exports.production = {
-    debug: false,
+    mode: 'production',
     entry: entry,
     output: Object.assign({}, output, {filename: 'atv.min.js'}),
     resolve: {
-        root: root
+        modules: [
+            'node_modules',
+            root
+        ]
     },
     plugins: plugins,
     module: {
-        loaders: [{
+        rules: [{
             test: /\.js?$/,
             exclude: /node_modules|bower_components|native/,
-            loader: 'babel-loader'
+            use: 'babel-loader'
         }]
     }
 };
 
 module.exports.test = {
     resolve: {
-        root: root
+        modules: [
+            'node_modules',
+            root
+        ]
     },
     module: {
-        loaders: [{
+        rules: [{
             test: /\.js?$/,
             exclude: /node_modules|bower_components|native/,
-            loader: 'babel-loader'
+            use: 'babel-loader'
         }]
     }
 };
