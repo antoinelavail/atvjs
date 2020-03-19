@@ -1,52 +1,38 @@
-var gulp = require('gulp');
-var path = require('path');
-var del = require('del');
-var $ = require('gulp-load-plugins')({
-    pattern: '*',
-});
+const gulp = require('gulp');
+const del = require('del');
+const webpack = require('webpack-stream');
+const uglify = require('gulp-uglify');
+const stripDebug = require('gulp-strip-debug');
+const webpackConfig = require('./webpack.config.js')['development'];
+const webpackConfigProd = require('./webpack.config.js')['production'];
 
-var webpackConfig = require('./webpack.config.js')['development'];
-var webpackConfigProd = require('./webpack.config.js')['production'];
+const SRC_PATH = 'src/';
+const DIST_PATH = 'dist/';
 
-var src = 'src/';
-var dist = 'dist/';
+const build = gulp.parallel(buildDevelopment, buildProduction);
 
-gulp.task('scripts-dev', function() {
+function buildDevelopment() {
     return gulp.src(webpackConfig.entry.app)
-        .pipe($.webpackStream(webpackConfig))
-        .pipe(gulp.dest(dist))
-        .pipe($.size({
-            title: 'js'
-        }));
-});
+        .pipe(webpack(webpackConfig))
+        .pipe(gulp.dest(DIST_PATH));
+}
 
-gulp.task('scripts-prod', function() {
+function buildProduction() {
     return gulp.src(webpackConfigProd.entry.app)
-        .pipe($.webpackStream(webpackConfigProd))
-        .pipe($.uglify({preserveComments: 'license'}))
-        .pipe($.stripDebug())
-        .pipe(gulp.dest(dist))
-        .pipe($.size({
-            title: 'js'
-        }));
-});
+        .pipe(webpack(webpackConfigProd))
+        .pipe(uglify())
+        .pipe(stripDebug())
+        .pipe(gulp.dest(DIST_PATH));
+}
 
-gulp.task('watch', function() {
-    gulp.watch(src + '**/*.js', ['scripts-dev', 'scripts-prod']);
-});
+async function watch() {
+    return await gulp.watch(SRC_PATH + '**/*.js', build);
+}
 
-gulp.task('clean', function(cb) {
-    del([dist]).then(function() {
-        cb();
-    });
-});
+async function clean() {
+    return del([DIST_PATH]);
+}
 
-var defaultTasks = ['scripts-dev' , 'scripts-prod'];
-
-// waits until clean is finished then builds the project
-gulp.task('build', ['clean'], function() {
-    gulp.start(defaultTasks);
-});
-
-// by default build project and then watch files
-gulp.task('default', ['build', 'watch']);
+exports.clean = clean;
+exports.build = gulp.series(clean, build);
+exports.default = gulp.series(clean, build, watch);
