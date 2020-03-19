@@ -1,5 +1,6 @@
 // external libraries
-import 'babel-polyfill';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import _ from 'lodash';
 import PubSub from 'pubsub-js';
 import LZString from 'lz-string';

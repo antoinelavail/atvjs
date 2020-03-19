@@ -25,7 +25,7 @@ module.exports.development = {
     module: {
         rules: [{
             test: /\.js?$/,
-            exclude: /node_modules|bower_components|native/,
+            exclude: /node_modules|bower_components/,
             use: 'babel-loader'
         }]
     }
@@ -45,23 +45,7 @@ module.exports.production = {
     module: {
         rules: [{
             test: /\.js?$/,
-            exclude: /node_modules|bower_components|native/,
-            use: 'babel-loader'
-        }]
-    }
-};
-
-module.exports.test = {
-    resolve: {
-        modules: [
-            'node_modules',
-            root
-        ]
-    },
-    module: {
-        rules: [{
-            test: /\.js?$/,
-            exclude: /node_modules|bower_components|native/,
+            exclude: /node_modules|bower_components/,
             use: 'babel-loader'
         }]
     }
