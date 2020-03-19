@@ -23,7 +23,7 @@ let defaults = {
  * @alias module:navigation.setOptions
  * @param {Object} cfg The configuration object {defaults}
  */
-function setOptions(cfg = {}) {
+export function setOptions(cfg = {}) {
     console.log('setting navigation options...', cfg);
     // override the default options
     _.assign(defaults, cfg);
@@ -38,7 +38,7 @@ function setOptions(cfg = {}) {
  * @param  {String} message         Loading message
  * @return {Document}               A newly created loader document
  */
-function getLoaderDoc(message) {
+export function getLoaderDoc(message) {
     let tpl = defaults.templates.loader;
     let str = (tpl && tpl({message: message})) || '<document></document>';
 
@@ -54,7 +54,7 @@ function getLoaderDoc(message) {
  * @param  {Object|String} message          Error page configuration or error message
  * @return {Document}                       A newly created error document
  */
-function getErrorDoc(message) {
+export function getErrorDoc(message) {
     let cfg = {};
     if (_.isPlainObject(message)) {
         cfg = message;
@@ -76,7 +76,7 @@ function getErrorDoc(message) {
  *
  * @return {Document} The document
  */
-function getLastDocumentFromStack() {
+export function getLastDocumentFromStack() {
     let docs = navigationDocument.documents;
     return docs[docs.length - 1];
 }
@@ -86,7 +86,7 @@ function getLastDocumentFromStack() {
  *
  * @private
  */
-function initMenu() {
+export function initMenu() {
     let menuCfg = defaults.menu;
 
     // no configuration given and neither the menu created earlier
@@ -105,14 +105,14 @@ function initMenu() {
 }
 
 /**
- * Helper function to perform navigation after applying the page level default handlers
+ * Helper export function to perform navigation after applying the page level default handlers
  *
  * @private
  *
  * @param  {Object} cfg         The configurations
  * @return {Document}           The created document
  */
-function show(cfg = {}) {
+export function show(cfg = {}) {
     if (_.isFunction(cfg)) {
         cfg = {
             template: cfg
@@ -144,7 +144,7 @@ function show(cfg = {}) {
  * @param  {Object|Function} cfg    The configuration options or the template function
  * @return {Document}               The created loader document.
  */
-function showLoading(cfg = {}) {
+export function showLoading(cfg = {}) {
     if (_.isString(cfg)) {
         cfg = {
             data: {
@@ -176,7 +176,7 @@ function showLoading(cfg = {}) {
  * @param  {Object|Function|Boolean} cfg    The configuration options or the template function or boolean to hide the error
  * @return {Document}                       The created error document.
  */
-function showError(cfg = {}) {
+export function showError(cfg = {}) {
     if (_.isBoolean(cfg) && !cfg && errorDoc) { // hide error
         navigationDocument.removeDocument(errorDoc);
         return;
@@ -208,7 +208,7 @@ function showError(cfg = {}) {
  *
  * @param  {Document} doc       The document to push to the navigation stack
  */
-function pushDocument(doc) {
+export function pushDocument(doc) {
     if (!(doc instanceof Document)) {
         console.warn('Cannot navigate to the document.', doc);
         return;
@@ -226,7 +226,7 @@ function pushDocument(doc) {
  * @param  {Document} doc               The document to push
  * @param  {Document} docToReplace      The document to replace
  */
-function replaceDocument(doc, docToReplace) {
+export function replaceDocument(doc, docToReplace) {
     if (!(doc instanceof Document) || !(docToReplace instanceof Document)) {
         console.warn('Cannot replace document.');
         return;
@@ -243,7 +243,7 @@ function replaceDocument(doc, docToReplace) {
  * @param   {Boolean} [replace=false]   Whether to replace the last document from the navigation stack
  * @return  {Document}                  The current document on the stack
  */
-function cleanNavigate(doc, replace = false) {
+export function cleanNavigate(doc, replace = false) {
     let navigated = false;
     let docs = navigationDocument.documents;
     let last = getLastDocumentFromStack();
@@ -278,7 +278,7 @@ function cleanNavigate(doc, replace = false) {
  *
  * @return {Promise}      Returns a Promise that resolves upon successful navigation.
  */
-function navigateToMenuPage() {
+export function navigateToMenuPage() {
 
     console.log('navigating to menu...');
 
@@ -307,7 +307,7 @@ function navigateToMenuPage() {
  * @param  {Boolean} replace    Replace the previous page.
  * @return {Promise}            Returns a Promise that resolves upon successful navigation.
  */
-function navigate(page, options, replace) {
+export function navigate(page, options = {}, replace = false) {
     let p = Page.get(page);
 
     if (_.isBoolean(options)) {
@@ -386,7 +386,7 @@ function navigate(page, options, replace) {
  * @param  {Document|String|Object} modal       The TVML string/document representation of the modal window or a configuration object to create modal from
  * @return {Document}                           The created modal document
  */
-function presentModal(modal) {
+export function presentModal(modal) {
     let doc = modal; // assume a document object is passed
     if (_.isString(modal)) { // if a modal document string is passed
         doc = Parser.dom(modal);
@@ -404,7 +404,7 @@ function presentModal(modal) {
  * @inner
  * @alias module:navigation.dismissModal
  */
-function dismissModal() {
+export function dismissModal() {
     navigationDocument.dismissModal();
     modalDoc = null;
 }
@@ -415,7 +415,7 @@ function dismissModal() {
  * @inner
  * @alias module:navigation.clear
  */
-function clear() {
+export function clear() {
     loaderDoc = null;
     modalDoc = null;
     navigationDocument.clear();
@@ -429,7 +429,7 @@ function clear() {
  *
  * @param  {Document} [doc]     The document until which we need to pop.
  */
-function pop(doc) {
+export function pop(doc) {
     if (doc instanceof Document) {
         _.defer(() => navigationDocument.popToDocument(doc));
     } else {
@@ -443,7 +443,7 @@ function pop(doc) {
  * @inner
  * @alias module:navigation.back
  */
-function back() {
+export function back() {
     if (getLastDocumentFromStack()) {
         pop();
     }
@@ -455,7 +455,7 @@ function back() {
  * @inner
  * @alias module:navigation.removeActiveDocument
  */
-function removeActiveDocument() {
+export function removeActiveDocument() {
     let doc = getActiveDocument();
     doc && navigationDocument.removeDocument(doc);
 }

@@ -29,7 +29,7 @@ let defaults = {
  *
  * @param {Object} cfg The configuration object
  */
-function setOptions(cfg = {}) {
+export function setOptions(cfg = {}) {
     console.log('setting menu options...', cfg);
     // override the default options
     _.assign(defaults, cfg);
@@ -43,7 +43,7 @@ function setOptions(cfg = {}) {
  * @param {Element} el 			The element to set attributes on
  * @param {Object} attributes 	Attributes key value pairs.
  */
-function setAttributes(el, attributes) {
+export function setAttributes(el, attributes) {
 	console.log('setting attributes on element...', el, attributes);
     _.each(attributes, (value, name) => el.setAttribute(name, value));
 }
@@ -56,7 +56,7 @@ function setAttributes(el, attributes) {
  * 
  * @return {Document}		Instance of the created menu document.
  */
-function get() {
+export function get() {
     if (!created) {
         create();
     }
@@ -70,7 +70,7 @@ function get() {
  * 
  * @param {Object} item 	The configuration realted to the menu item.
  */
-function addItem(item = {}) {
+export function addItem(item = {}) {
     if (!item.id) {
         console.warn('Cannot add menuitem. A unique identifier is required for the menuitem to work correctly.');
         return;
@@ -129,7 +129,7 @@ function addItem(item = {}) {
  * @param  {Object} cfg 		Menu related configurations
  * @return {Document}     		The created menu document
  */
-function create(cfg = {}) {
+export function create(cfg = {}) {
     if (created) {
         console.warn('An instance of menu already exists, skipping creation...');
         return;
@@ -160,7 +160,7 @@ function create(cfg = {}) {
  * @param {Document} doc        	The document to associate with the menuitem
  * @param {String} menuItemid		The id of the menu item as per the configuration
  */
-function setDocument(doc, menuItemid) {
+export function setDocument(doc, menuItemid) {
     let menuItem = itemsCache[menuItemid];
 
     if (!menuItem) {
@@ -178,7 +178,7 @@ function setDocument(doc, menuItemid) {
  * 
  * @param {String} menuItemid 		The id of the menu item as per the configuration
  */
-function setSelectedItem(menuItemid) {
+export function setSelectedItem(menuItemid) {
     let menuItem = itemsCache[menuItemid];
 
     if (!menuItem) {

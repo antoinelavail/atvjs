@@ -60,7 +60,7 @@ const defaults = {
  *
  * @param {Object} cfg The configuration object {defaults}
  */
-function setOptions(cfg = {}) {
+export function setOptions(cfg = {}) {
     console.log('setting default page options...', cfg);
     // override the default options
     _.assign(defaults, cfg);
@@ -76,7 +76,7 @@ function setOptions(cfg = {}) {
  * @param  {String} style Style string
  * @param  {Document} doc   The document to add styles on
  */
-function appendStyle(style, doc) {
+export function appendStyle(style, doc) {
     if (!_.isString(style) || !doc) {
         console.log('invalid document or style string...', style, doc);
         return;
@@ -102,7 +102,7 @@ function appendStyle(style, doc) {
  * @param  {Document} doc       The document to prepare
  * @return {Document}           The document passed
  */
-function prepareDom(doc, cfg = {}) {
+export function prepareDom(doc, cfg = {}) {
     if (!(doc instanceof Document)) {
         console.warn('Cannnot prepare, the provided element is not a document.');
         return;
@@ -128,7 +128,7 @@ function prepareDom(doc, cfg = {}) {
  * @param  {Object} response        The data object
  * @return {Document}               The newly created document
  */
-function makeDom(cfg, response) {
+export function makeDom(cfg, response) {
     // apply defaults
     _.defaults(cfg, defaults);
     // create Document
@@ -154,7 +154,7 @@ function makeDom(cfg, response) {
  * @param  {Object} cfg     The page configuration object
  * @return {Function}       A function that returns promise upon execution
  */
-function makePage(cfg) {
+export function makePage(cfg) {
     return (options) => {
         _.defaultsDeep(cfg, defaults);
 

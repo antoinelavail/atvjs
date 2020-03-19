@@ -23,7 +23,7 @@ const defaults = {
  * @param  {String} [method='GET']                      Type of HTTP request (defaults to GET)
  * @return {Promise}                                     The Promise that resolves on ajax success
  */
-function ajax(url, options, method = 'GET') {
+export function ajax(url, options, method = 'GET') {
     if (typeof url == 'undefined') {
         console.error('No url specified for the ajax.');
         throw new TypeError('A URL is required for making the ajax request.');

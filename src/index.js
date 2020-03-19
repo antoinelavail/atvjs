@@ -130,7 +130,7 @@ let libs = {
  *
  * @param  {Object} cfg 	All configuration options relevant to the libraries
  */
-function initLibraries(cfg = {}) {
+export function initLibraries(cfg = {}) {
 	_.each(configMap, (keys, libName) => {
 		let lib = libs[libName];
 		let options = {};
@@ -211,7 +211,7 @@ const handlers = {
  *
  * @param  {Object} cfg 	All configuration options relevant to the App.
  */
-function initAppHandlers (cfg = {}) {
+export function initAppHandlers (cfg = {}) {
 	_.each(handlers, (handler, name) => App[name] = _.partial(handler, _, (_.isFunction(cfg[name])) ? cfg[name] : _.noop));
 }
 
@@ -329,7 +329,7 @@ function initAppHandlers (cfg = {}) {
  *
  * @param  {Object} cfg 		Configuration options
  */
-function start(cfg = {}) {
+export function start(cfg = {}) {
 	if (started) {
 		console.warn('Application already started, cannot call start again.');
 		return;
@@ -358,7 +358,7 @@ function start(cfg = {}) {
  * @param  {Object} [options]           Options value. {when: 'now'} // or 'onResume'
  * @param  {Object} [reloadData]        Custom data that needs to be passed while reloading the app
  */
-function reload(options, reloadData) {
+export function reload(options, reloadData) {
     App.onReload(options);
     App.reload(options, reloadData);
 }

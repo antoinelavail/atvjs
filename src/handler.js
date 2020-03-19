@@ -134,7 +134,7 @@ let handlers = {
  *
  * @param {Object} cfg The configuration object {defaults}
  */
-function setOptions(cfg = {}) {
+export function setOptions(cfg = {}) {
     console.log('setting handler options...', cfg);
     // override the default options
     _.defaultsDeep(handlers, cfg.handlers);
@@ -163,7 +163,7 @@ function setOptions(cfg = {}) {
  * @param {Object} cfg              The page object configuration.
  * @param {Boolean} [add=true]      Whether to add or remove listeners. Defaults to true (add)
  */
-function setListeners(doc, cfg = {}, add = true) {
+export function setListeners(doc, cfg = {}, add = true) {
     if (!doc || !(doc instanceof Document)) {
         return;
     }
@@ -223,7 +223,7 @@ function setListeners(doc, cfg = {}, add = true) {
  * @param {Document} doc            The document to add the listeners on.
  * @param {Object} cfg              The page object configuration.
  */
-function addListeners(doc, cfg) {
+export function addListeners(doc, cfg) {
     setListeners(doc, cfg, true);
 }
 
@@ -250,7 +250,7 @@ function addListeners(doc, cfg) {
  * @param {Document} doc            The document to add the listeners on.
  * @param {Object} cfg              The page object configuration.
  */
-function removeListeners(doc, cfg) {
+export function removeListeners(doc, cfg) {
     setListeners(doc, cfg, false);
 }
 
@@ -262,7 +262,7 @@ function removeListeners(doc, cfg) {
  * @param {Document} doc            The document to set/unset listeners on.
  * @param {Boolean} [add=true]      Whether to add or remove listeners. Defaults to true (add)
  */
-function setDefaultHandlers(doc, add = true) {
+export function setDefaultHandlers(doc, add = true) {
     if (!doc || !(doc instanceof Document)) {
         return;
     }
@@ -287,7 +287,7 @@ function setDefaultHandlers(doc, add = true) {
  *
  * @param {Document} doc        The document to add the listeners on.
  */
-function addDefaultHandlers(doc) {
+export function addDefaultHandlers(doc) {
     setDefaultHandlers(doc, true);
 }
 
@@ -298,7 +298,7 @@ function addDefaultHandlers(doc) {
  *
  * @param {Document} doc        The document to add the listeners on.
  */
-function removeDefaultHandlers(doc) {
+export function removeDefaultHandlers(doc) {
     setDefaultHandlers(doc, false);
 }
 
@@ -312,7 +312,7 @@ function removeDefaultHandlers(doc) {
  * @param {Obejct}  cfg             Page configuration object
  * @param {Boolean} [add=true]      Whether to add or remove the handlers
  */
-function setHandlers(doc, cfg, add = true) {
+export function setHandlers(doc, cfg, add = true) {
     if (add) {
         addDefaultHandlers(doc);
         addListeners(doc, cfg);    
@@ -332,7 +332,7 @@ function setHandlers(doc, cfg, add = true) {
  * @param {Document}  doc           The page document.
  * @param {Obejct}  cfg             Page configuration object
  */
-function addHandlers(doc, cfg) {
+export function addHandlers(doc, cfg) {
     setHandlers(doc, cfg, true);
 }
 
@@ -346,7 +346,7 @@ function addHandlers(doc, cfg) {
  * @param {Document}  doc           The page document.
  * @param {Obejct}  cfg             Page configuration object
  */
-function removeHandlers(doc, cfg) {
+export function removeHandlers(doc, cfg) {
     setHandlers(doc, cfg, false);
 }
 

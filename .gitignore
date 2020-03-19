@@ -1,7 +1,7 @@
 # General
 *.log
 .DS_Store
-
+.idea/
 # Web
 node_modules
 bower_components

@@ -11,7 +11,7 @@ const xmlPrefix = '<?xml version="1.0" encoding="UTF-8" ?>'; // xml prefix
  * @param  {Object} [data]          The data that will be applied to the function
  * @return {Document}               A new Document
  */
-function parse(s, data) {
+export function parse(s, data) {
     // if a template function is provided, call the function with data
     s = _.isFunction(s) ? s(data) : s;
 
